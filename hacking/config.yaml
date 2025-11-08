@@ -1,0 +1,7 @@
+paths:
+  data_econ_characteristics: "data_sources/Economic Characteristics/data_econ_characteristics.csv"
+  data_report_card: "data_sources/2025-Report-Card-Public-Data-Set.xlsx"
+  output_directory: "data_sources/output"
+
+
+
