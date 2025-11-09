@@ -1,0 +1,11 @@
+geopandas
+pandas
+numpy<2.0
+shapely
+fiona
+pyproj
+matplotlib
+seaborn
+scikit-learn
+jupyter
+contextily
