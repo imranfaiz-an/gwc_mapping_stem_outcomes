@@ -1,7 +1,7 @@
 paths:
   data_econ_characteristics: "data_sources/econ_data/data_econ_characteristics.csv"
   data_report_card: "data_sources/raw_data/2025-Report-Card-Public-Data-Set.xlsx"
-  output_directory: "data_sources/output"
+  output_directory: "data_sources/output/20260109/"
 
 
 
