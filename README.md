@@ -6,15 +6,15 @@ Our analysis integrates multiple publicly available datasets from state and fede
 
 ### Illinois State Board of Education (ISBE) School Report Card (2025)
 Public dataset providing school-level academic and demographic indicators.  
-**Source**
+**[Source](https://www.illinoisreportcard.com/)**
 
 ### ISBE School Directory
 Contains comprehensive identifying information for schools and districts, including RCDTS codes and ZIP codes.  
-**Source**
+**[Source](https://www.isbe.net/Pages/Data-Analysis-Directories.aspx)**
 
 ### U.S. Census Bureau — American Community Survey (ACS) 2023 (5-Year Estimates)
 Provides ZIP code–level socioeconomic indicators, including unemployment and poverty rates.  
-**Source**
+**[Source](https://www.census.gov/data.html)**
 
 ---
 
@@ -124,3 +124,4 @@ All variables can be disaggregated by:
 - Grade level  
 
 This granularity would enable deeper insights into equity and access across student populations and neighborhoods.
+
