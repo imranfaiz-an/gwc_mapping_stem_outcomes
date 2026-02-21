@@ -23,6 +23,25 @@ ZIP_CODES = [60621, 60636, 60619, 60620, 60623, 60624, 60647, 60651]
 ZIP_CODES_ADD = [60614, 60657, 60626, 60645, 60660, 60640, 60641, 60613, 60657]
 ALL_ZIP_CODES = ZIP_CODES + ZIP_CODES_ADD
 
+zip_neighbor_dict = {
+    "60621": "Englewood",
+    "60636": "Englewood",
+    "60619": "Chatham",
+    "60620": "Chatham",
+    "60623": "North Lawndale",
+    "60624": "East Garfield Park",
+    "60647": "Humboldt Park",
+    "60651": "Humboldt Park", 
+    "60614": "Lincoln Park",
+    "60657": "Lincoln Park",
+    "60626": "Rogers Park",
+    "60645": "Rogers Park",
+    "60660": "Edgewater",
+    "60640": "Edgewater",
+    "60641": "Portage Park",
+    "60613": "Lake View"
+}
+
 data_econ = (
     # Select the columns we need and rename them
     # GEO_ID: Unique identifier for the geographic area
@@ -67,6 +86,9 @@ data_econ = (
     # Filter to only include the zip codes we need
     .loc[lambda df: df["zip_code"].isin(ALL_ZIP_CODES)]
     .reset_index(drop=True)
+    # Add neighborhood mapping based on zip code
+    .assign(neighborhood = lambda x: x["zip_code"].astype(int).astype(str).map(zip_neighbor_dict).fillna("Unknown"))
+    .assign(year_of_economic_data = "2023")
 )
 data_econ.to_csv(load_config()["paths"]["output_directory"] + "economic_characteristics.csv", index=False)
 
@@ -110,4 +132,41 @@ math_and_science_prof = math_prof.merge(
     how="left"
 )
 
+math_and_science_prof["RCDTS"] = math_and_science_prof["RCDTS"].astype(str).str.replace("-", "", regex=False).str.replace(r'[a-zA-Z]', "", regex=True)
 math_and_science_prof.to_csv(load_config()["paths"]["output_directory"] + "report_card_proficiency_scores.csv", index=False)
+
+
+
+# RTDTS TO ZIP CODES 
+school_data = pandas.read_excel(
+    load_config()["paths"]["schools"],
+    sheet_name="1 Public Dist & Sch"
+)
+school_data = school_data[["CountyName", "Region-2\nCounty-3\nDistrict-4", "Type", "School", "FacilityName", "City", "Zip"]]
+school_data = school_data.rename(columns={
+    "CountyName": "county",
+    "Region-2\nCounty-3\nDistrict-4": "rcd",
+    "Type": "type",
+    "School": "school",
+    "FacilityName": "facility_name",
+    "City": "city",
+    "Zip": "zip"
+})
+school_data[["rcd", "type", "school"]] = school_data[["rcd", "type", "school"]].astype(str)
+school_data["RCDTS"] = school_data["rcd"] + school_data["type"] + school_data["school"]
+school_data["RCDTS"] = school_data["RCDTS"].astype(str).str.replace("-", "", regex=False)
+school_data["zip_code"] = school_data["zip"].astype(str).str.extract(r"^\s*(\d{5})").astype(int)
+school_data = school_data[["RCDTS", "zip_code", "county"]].drop_duplicates()
+
+school_data.to_csv(load_config()["paths"]["output_directory"] + "school_metadata.csv", index=False)
+
+
+# Merge all datasets
+data_df = math_and_science_prof.merge(school_data, on = "RCDTS", how = "left")
+data_df = data_df.merge(data_econ, on = "zip_code", how = "left")
+data_df = data_df[data_df["zip_code"].isin(ALL_ZIP_CODES)]
+data_df["zip_code"] = data_df["zip_code"].astype(int).astype(str)
+data_df.to_csv(load_config()["paths"]["output_directory"] + "merged_data.csv", index = False)
+
+
+data_df.head()
