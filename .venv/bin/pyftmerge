@@ -1,4 +1,4 @@
-#!/Users/apollinaire/Desktop/gw_carver/.venv/bin/python
+#!/Users/faizanimran/gw_carver/.venv/bin/python
 # -*- coding: utf-8 -*-
 import sys
 from fontTools.merge import main
