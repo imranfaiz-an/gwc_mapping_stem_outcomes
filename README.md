@@ -1,4 +1,5 @@
-# Data Structure and Methodology
+# Carver Science Center - Scopeaton Deliverable
+This repo contains the work that our did during the two day Scopeathon event that hosted nine different organizations from the South Side of Chicago. Our team worked with the Carver Science Center to help build a consolidated dataset for them so that they can highlight the disparities that exist in educational outcomes across different neighborhoods within the city especially in regards to STEM outcomes. Listed below is the detailed mehodology that was used alongside the data sources used. 
 
 ## 1. Datasets Used
 
@@ -124,4 +125,5 @@ All variables can be disaggregated by:
 - Grade level  
 
 This granularity would enable deeper insights into equity and access across student populations and neighborhoods.
+
 
